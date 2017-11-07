@@ -20,6 +20,10 @@ switch (command) {
     client.end({cmd: 'deposit', amount: process.argv[3]})
     break
 
+  case 'withdraw':
+    client.end({cmd: 'withdraw', amount: process.argv[3]})
+    break  
+
   case 'log':
     client.end({cmd: 'log'})
     break

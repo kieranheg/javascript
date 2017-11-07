@@ -21,6 +21,15 @@ var server = net.createServer(function (socket) {
     socket.write({cmd: 'deposit', balance: bal})
     break
 
+  case 'withdraw':
+  	log.push(msg);
+  	var wDrawAmt = parseInt(msg.amount);
+  	if (bal - wDrawAmt >= 0) {
+  	  bal -= wDrawAmt;
+  	}
+    socket.write({cmd: 'withdraw', balance: bal})
+    break  
+
   case 'log':
   	log.forEach(function(el) {
   		socket.write({cmd: 'log', entry: el})
