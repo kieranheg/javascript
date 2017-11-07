@@ -1,8 +1,10 @@
 // bank.js
 var jsonStream = require('duplex-json-stream')
+var fs = require('fs');
+
 var net = require('net')
-var bal = 0;
-var log = [];
+var log = readTextFile();
+var bal = getStoredBalance(log);
 
 var server = net.createServer(function (socket) {
   socket = jsonStream(socket)
@@ -18,6 +20,7 @@ var server = net.createServer(function (socket) {
   case 'deposit':
   	log.push(msg);
     bal += parseInt(msg.amount);
+    writeTextFile(log);
     socket.write({cmd: 'deposit', balance: bal})
     break
 
@@ -26,6 +29,7 @@ var server = net.createServer(function (socket) {
   	var wDrawAmt = parseInt(msg.amount);
   	if (bal - wDrawAmt >= 0) {
   	  bal -= wDrawAmt;
+  	  writeTextFile(log);
   	}
     socket.write({cmd: 'withdraw', balance: bal})
     break  
@@ -41,10 +45,47 @@ var server = net.createServer(function (socket) {
     break
     }
 
-    // socket.write can be used to send a reply
-    // s
-
   })
 })
 
 server.listen(3876)
+
+function getStoredBalance(txns) {
+	var bal = 0;
+	txns.forEach(function(txn) {
+		var command = txn.cmd;
+
+		switch (command) {
+		  case 'deposit':
+		    bal += parseInt(txn.amount);
+		    	console.log('>>>> inc bal ', bal)
+		    break
+
+		  case 'withdraw':
+		    bal -= parseInt(txn.amount);
+		    	console.log('>>>> dec bal ', bal)
+		    break  
+
+		  default:
+		    // Unknown command
+		    break
+		}
+	});
+	console.log('>>>> final bal ', bal)
+	return bal;
+}
+
+function writeTextFile(txns) {
+	fs.writeFile('vault-log.txt', JSON.stringify(txns, null, 2), (err) => {
+		if (err) {
+			console.log(err);
+			return;
+		};
+	});
+	console.log('Bank txn log updated');
+}
+
+function readTextFile() {
+	var data = JSON.parse(fs.readFileSync('vault-log.txt'));
+	return data;
+}
