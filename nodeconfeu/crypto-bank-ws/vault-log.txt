@@ -1,0 +1,22 @@
+[
+  {
+    "cmd": "deposit",
+    "amount": "1106"
+  },
+  {
+    "cmd": "deposit",
+    "amount": "1106"
+  },
+  {
+    "cmd": "deposit",
+    "amount": "1106"
+  },
+  {
+    "cmd": "deposit",
+    "amount": "1106"
+  },
+  {
+    "cmd": "withdraw",
+    "amount": "20"
+  }
+]
