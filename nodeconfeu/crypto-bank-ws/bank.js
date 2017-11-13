@@ -12,39 +12,40 @@ var server = net.createServer(function (socket) {
   socket.on('data', function (msg) {
     console.log('Bank received:', msg)
     var command = msg.cmd;
+
     switch (command) {
+
     case 'balance':
-    socket.write({cmd: 'balance', balance: bal})
-    break
+      socket.write({cmd: 'balance', balance: bal})
+      break;
 
-  case 'deposit':
-  	log.push(msg);
-    bal += parseInt(msg.amount);
-    writeTextFile(log);
-    socket.write({cmd: 'deposit', balance: bal})
-    break
+    case 'deposit':
+    	log.push(msg);
+      bal += parseInt(msg.amount);
+      writeTextFile(log);
+      socket.write({cmd: 'balance', balance: bal});
+      break;
 
-  case 'withdraw':
-  	log.push(msg);
-  	var wDrawAmt = parseInt(msg.amount);
-  	if (bal - wDrawAmt >= 0) {
-  	  bal -= wDrawAmt;
-  	  writeTextFile(log);
-  	}
-    socket.write({cmd: 'withdraw', balance: bal})
-    break  
+    case 'withdraw':
+    	log.push(msg);
+    	var wDrawAmt = parseInt(msg.amount);
+    	if (bal - wDrawAmt >= 0) {
+    	  bal -= wDrawAmt;
+    	  writeTextFile(log);
+    	}
+      socket.write({cmd: 'balance', balance: bal})
+      break;
 
-  case 'log':
-  	log.forEach(function(el) {
-  		socket.write({cmd: 'log', entry: el})
-  	});
-    break  
+    case 'log':
+    	log.forEach(function(el) {
+    		socket.write({cmd: 'log', entry: el})
+    	});
+      break;
 
-  default:
-    // Unknown command
-    break
+    default:
+      // Unknown command
+      break;
     }
-
   })
 })
 
@@ -64,7 +65,7 @@ function getStoredBalance(txns) {
 		  case 'withdraw':
 		    bal -= parseInt(txn.amount);
 		    	console.log('>>>> dec bal ', bal)
-		    break  
+		    break
 
 		  default:
 		    // Unknown command

@@ -22,7 +22,7 @@ function view(state, emit) {
       </div>
 
       <button class="f5 dim br-pill ph3 pv2 mb2 dib white bg-hot-pink bn pointer" onclick=${titlePage}>Goto Title page!</button>
-      
+
     </body>
   `
 
@@ -37,6 +37,4 @@ function view(state, emit) {
     function titlePage() {
         emit('clicks:titlePage')
     }
-}
-
-192.168 .81 .203
+  }

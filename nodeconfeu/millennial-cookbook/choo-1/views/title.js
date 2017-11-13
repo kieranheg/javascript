@@ -13,11 +13,11 @@ function view(state, emit) {
         Choo choo!
       </h1>
       <div>
-        Yaaaay Title page!
+        Yaaaay Title page! !!!!!!!
 
         <input id="title" type="text" onkeyup=${formChanged} onchange=${formChanged}/>
       </div>
-      
+
     </body>
     `
 

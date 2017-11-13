@@ -18,5 +18,13 @@
   {
     "cmd": "withdraw",
     "amount": "20"
+  },
+  {
+    "cmd": "deposit",
+    "amount": "6"
+  },
+  {
+    "cmd": "deposit",
+    "amount": "100"
   }
 ]
