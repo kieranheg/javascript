@@ -9,11 +9,6 @@ describe("String Calculator tests", function () {
       expect(add("")).to.equal(0);
     })
 
-
-    // it('no string param will return 0', function(){
-    //     expect(stringCalculator.add()).to.equal(0);
-    // })
-
     it('a single string param of zero will return that as a number', function () {
       expect(add("0")).to.equal(0);
     })
